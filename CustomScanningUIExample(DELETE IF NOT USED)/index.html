@@ -79,7 +79,7 @@
       }
     </style>
 	<!-- finish mindar files -->
-	<script src="Build/Build.loader.js"></script>
+	<script src="Build/01.KafkaFantasy.loader.js"></script>
   </head>
   <body style="text-align: center; margin: 0px; padding: 0px; overflow: hidden; ">
 	<div id="unity-container" class="unity-desktop" style="z-index: 2; position: absolute; top: 0; left: 0;">
@@ -106,10 +106,10 @@
 	  var progressBarFull = document.querySelector("#unity-progress-bar-full");
 	  
 	  /*mindar code*/
-	  var mindARStr = "<a-scene id='MindAR-scene' mindar-image='imageTargetSrc: Compiled Target/target.mind; autoStart: true; maxTrack: 1; numberTrack: 5; uiError:yes; uiLoading:yes; uiScanning: #custom-scanning-overlay; uiScanningOnTargetLost: yes; filterMinCF: 0.0001; filterBeta: 0.001; warmupTolerance: 5; missTolerance: 5;' color-space='sRGB' renderer='colorManagement: true, physicallyCorrectLights' vr-mode-ui='enabled: false' device-orientation-permission-ui='enabled: false'>\n\t<a-camera position='0 0 0' look-controls='enabled: false'></a-camera>\n";
+	  var mindARStr = "<a-scene id='MindAR-scene' mindar-image='imageTargetSrc: Compiled Target/target.mind; autoStart: true; maxTrack: 1; numberTrack: 2; uiError:yes; uiLoading:yes; uiScanning: #custom-scanning-overlay; uiScanningOnTargetLost: yes; filterMinCF: 0.0001; filterBeta: 0.001; warmupTolerance: 5; missTolerance: 5;' color-space='sRGB' renderer='colorManagement: true, physicallyCorrectLights' vr-mode-ui='enabled: false' device-orientation-permission-ui='enabled: false'>\n\t<a-camera position='0 0 0' look-controls='enabled: false'></a-camera>\n";
 	  
 	  var imageTargetsStr = '';
-	  for (var i = 0; i < 5; ++i) {
+	  for (var i = 0; i < 2; ++i) {
 		imageTargetsStr += "\t<a-entity mindar-image-target='targetIndex: " + i + "'></a-entity>\n";
 	  }
 	  
@@ -141,12 +141,12 @@
       
 	  var buildUrl = "Build";
 	  var config = {
-        dataUrl: buildUrl + "/Build.data",
-        frameworkUrl: buildUrl + "/Build.framework.js",
-			codeUrl: buildUrl + "/Build.wasm",
+        dataUrl: buildUrl + "/01.KafkaFantasy.data",
+        frameworkUrl: buildUrl + "/01.KafkaFantasy.framework.js",
+			codeUrl: buildUrl + "/01.KafkaFantasy.wasm",
         streamingAssetsUrl: "StreamingAssets",
         companyName: "DefaultCompany",
-        productName: "My project (6)",
+        productName: "OS_WebNovelAR",
         productVersion: "0.1",
       };
 	  
