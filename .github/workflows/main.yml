@@ -18,15 +18,18 @@ jobs:
         with:
           lfs: true
       
-      - name: Turn off LFS
-        run: |
-          git lfs uninstall
-          rm -rf .git
-          rm .gitattributes
+      # Git LFS 파일 pull
+      - name: Checkout LFS objects
+        run: git lfs pull
+      
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+      
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './Build'
       
       - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./Build
-          publish_branch: gh-pages
+        id: deployment
+        uses: actions/deploy-pages@v4
