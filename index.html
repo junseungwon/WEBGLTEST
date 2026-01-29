@@ -10,11 +10,11 @@
 	<script src="js/mindar-image-aframe.prod"></script>
 	<style>.tmpHidden {display: none;}</style>
 	<!-- finish mindar files -->
-	<script src="Build/Build.loader.js"></script>
+	<script src="Build/01.KafkaFantasy.loader.js"></script>
   </head>
   <body style="text-align: center; margin: 0px; padding: 0px; overflow: hidden; ">
 	<div id="unity-container" class="unity-desktop" style="z-index: 2; position: absolute; top: 0; left: 0;">
-        <canvas id="unity-canvas" style="background: #231F20; width: 100%; height: 100%;"></canvas>
+        <canvas id="unity-canvas" style="background: #000000; width: 100%; height: 100%;"></canvas>
 		<div id="unity-loading-bar" style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); display: none;">
 			<div id="unity-logo" style="width: 154px; height: 130px; background: url('images/unity-logo-dark.png') no-repeat center;"></div>
 			<div id="unity-progress-bar-empty" style="width: 141px; height: 18px; margin-top: 10px; margin-left: 6.5px; background: url('images/progress-bar-empty-dark.png') no-repeat center;">
@@ -30,10 +30,10 @@
 	  var progressBarFull = document.querySelector("#unity-progress-bar-full");
 	  
 	  /*mindar code*/
-	  var mindARStr = "<a-scene id='MindAR-scene' mindar-image='imageTargetSrc: Compiled Target/target.mind; autoStart: true; maxTrack: 1; numberTrack: 2; uiError:yes; uiLoading:yes; uiScanning:yes; uiScanningOnTargetLost: yes; filterMinCF: 0.0001; filterBeta: 0.001; warmupTolerance: 5; missTolerance: 5;' color-space='sRGB' renderer='colorManagement: true, physicallyCorrectLights' vr-mode-ui='enabled: false' device-orientation-permission-ui='enabled: false'>\n\t<a-camera position='0 0 0' look-controls='enabled: false'></a-camera>\n";
+	  var mindARStr = "<a-scene id='MindAR-scene' mindar-image='imageTargetSrc: Compiled Target/target.mind; autoStart: true; maxTrack: 1; numberTrack: 9; uiError:yes; uiLoading:yes; uiScanning:yes; uiScanningOnTargetLost: yes; filterMinCF: 0.0001; filterBeta: 0.001; warmupTolerance: 5; missTolerance: 5;' color-space='sRGB' renderer='colorManagement: true, physicallyCorrectLights' vr-mode-ui='enabled: false' device-orientation-permission-ui='enabled: false'>\n\t<a-camera position='0 0 0' look-controls='enabled: false'></a-camera>\n";
 	  
 	  var imageTargetsStr = '';
-	  for (var i = 0; i < 2; ++i) {
+	  for (var i = 0; i < 9; ++i) {
 		imageTargetsStr += "\t<a-entity mindar-image-target='targetIndex: " + i + "'></a-entity>\n";
 	  }
 	  
@@ -65,12 +65,12 @@
       
 	  var buildUrl = "Build";
 	  var config = {
-        dataUrl: buildUrl + "/Build.data.gz",
-        frameworkUrl: buildUrl + "/Build.framework.js.gz",
-			codeUrl: buildUrl + "/Build.wasm.gz",
+        dataUrl: buildUrl + "/01.KafkaFantasy.data",
+        frameworkUrl: buildUrl + "/01.KafkaFantasy.framework.js",
+			codeUrl: buildUrl + "/01.KafkaFantasy.wasm",
         streamingAssetsUrl: "StreamingAssets",
         companyName: "DefaultCompany",
-        productName: "My project (6)",
+        productName: "OS_WebNovelAR",
         productVersion: "0.1",
       };
 	  
