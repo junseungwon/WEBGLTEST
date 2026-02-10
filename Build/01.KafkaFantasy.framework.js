@@ -1246,29 +1246,29 @@ var tempDouble;
 var tempI64;
 
 var ASM_CONSTS = {
- 3093912: function() {
+ 3097640: function() {
   return Module.webglContextAttributes.premultipliedAlpha;
  },
- 3093973: function() {
+ 3097701: function() {
   return Module.webglContextAttributes.preserveDrawingBuffer;
  },
- 3094037: function() {
+ 3097765: function() {
   return Module.webglContextAttributes.powerPreference;
  },
- 3094095: function() {
+ 3097823: function() {
   Module["emscripten_get_now_backup"] = performance.now;
  },
- 3094150: function($0) {
+ 3097878: function($0) {
   performance.now = function() {
    return $0;
   };
  },
- 3094198: function($0) {
+ 3097926: function($0) {
   performance.now = function() {
    return $0;
   };
  },
- 3094246: function() {
+ 3097974: function() {
   performance.now = Module["emscripten_get_now_backup"];
  }
 };
@@ -3240,6 +3240,71 @@ function _MindAR_storeCallbacks(positionArray, rotationArray, scaleArray, invoke
  Module["MindAR"].invokeArReadyCallback = Module["MindAR"].invokeArReadyCallback || invokeArReadyCallback;
  Module["MindAR"].invokeArErrorCallback = Module["MindAR"].invokeArErrorCallback || invokeArErrorCallback;
  Module["MindAR"].setCameraProjectionMatrixCallback = Module["MindAR"].setCameraProjectionMatrixCallback || setCameraProjectionMatrixCallback;
+}
+
+function _RequestFrontCamera() {
+ console.log("RequestFrontCamera called");
+ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+  navigator.mediaDevices.getUserMedia({
+   video: {
+    facingMode: "user"
+   }
+  }).then(function(stream) {
+   console.log("Front camera stream obtained");
+   var video = document.getElementById("cameraVideo");
+   if (!video) {
+    video = document.createElement("video");
+    video.id = "cameraVideo";
+    video.autoplay = true;
+    video.playsInline = true;
+    video.muted = true;
+    video.style.position = "absolute";
+    video.style.top = "0";
+    video.style.left = "0";
+    video.style.width = "100%";
+    video.style.height = "100%";
+    video.style.objectFit = "cover";
+    video.style.zIndex = "1";
+    video.style.filter = "brightness(0.3)";
+    document.body.appendChild(video);
+   }
+   video.srcObject = stream;
+   try {
+    SendMessage("CHC_Take5Manager", "OnCameraActivated", "1");
+   } catch (e) {
+    console.error("Failed to send message to Unity:", e);
+   }
+  }).catch(function(err) {
+   console.error("Camera error: ", err);
+   try {
+    SendMessage("CHC_Take5Manager", "OnCameraActivated", "0");
+   } catch (e) {
+    console.error("Failed to send error message to Unity:", e);
+   }
+  });
+ } else {
+  console.error("getUserMedia not supported");
+  try {
+   SendMessage("CHC_Take5Manager", "OnCameraActivated", "0");
+  } catch (e) {
+   console.error("Failed to send error message to Unity:", e);
+  }
+ }
+}
+
+function _StopFrontCamera() {
+ console.log("StopFrontCamera called");
+ var video = document.getElementById("cameraVideo");
+ if (video) {
+  if (video.srcObject) {
+   video.srcObject.getTracks().forEach(function(track) {
+    track.stop();
+   });
+   video.srcObject = null;
+  }
+  video.remove();
+  console.log("Camera stopped and removed");
+ }
 }
 
 var ExceptionInfoAttrs = {
@@ -13602,6 +13667,8 @@ var asmLibraryArg = {
  "MindAR_getNumberMindARImageTargets": _MindAR_getNumberMindARImageTargets,
  "MindAR_isRunning": _MindAR_isRunning,
  "MindAR_storeCallbacks": _MindAR_storeCallbacks,
+ "RequestFrontCamera": _RequestFrontCamera,
+ "StopFrontCamera": _StopFrontCamera,
  "__cxa_allocate_exception": ___cxa_allocate_exception,
  "__cxa_atexit": ___cxa_atexit,
  "__cxa_begin_catch": ___cxa_begin_catch,
@@ -14264,6 +14331,8 @@ var dynCall_viiifffi = Module["dynCall_viiifffi"] = createExportWrapper("dynCall
 var dynCall_iiiifffi = Module["dynCall_iiiifffi"] = createExportWrapper("dynCall_iiiifffi");
 
 var dynCall_iiiiifffi = Module["dynCall_iiiiifffi"] = createExportWrapper("dynCall_iiiiifffi");
+
+var dynCall_iiiffi = Module["dynCall_iiiffi"] = createExportWrapper("dynCall_iiiffi");
 
 var dynCall_iifiii = Module["dynCall_iifiii"] = createExportWrapper("dynCall_iifiii");
 
